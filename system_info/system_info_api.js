@@ -152,9 +152,15 @@ var _getPropertyValue = function(prop, callback) {
 };
 
 exports.getPropertyValue = function(prop, successCallback, errorCallback) {
-  if (!successCallback) {
-    return;
-  }
+  if (typeof prop !== 'string')
+    throw new tizen.WebAPIException(tizen.WebAPIException.TYPE_MISMATCH_ERR);
+
+  if (typeof successCallback !== 'function')
+    throw new tizen.WebAPIException(tizen.WebAPIException.TYPE_MISMATCH_ERR);
+
+  if (errorCallback && (typeof errorCallback !== 'function'))
+    throw new tizen.WebAPIException(tizen.WebAPIException.TYPE_MISMATCH_ERR);
+
   _getPropertyValue(prop, function(error, data) {
     if (!error) {
       successCallback(_createConstClone(data));
@@ -210,6 +216,9 @@ exports.addPropertyValueChangeListener = function(prop, successCallback, option)
 }
 
 exports.removePropertyValueChangeListener = function(listenerId) {
+  if (typeof listenerId !== 'number')
+    throw new tizen.WebAPIException(tizen.WebAPIException.TYPE_MISMATCH_ERR);
+
   var prop = _listeners[listenerId]["prop"];
 
   delete _listeners[listenerId];

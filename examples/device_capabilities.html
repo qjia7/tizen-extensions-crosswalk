@@ -1,0 +1,146 @@
+<h1>Hello Device Capabilities API!</h1>
+
+<body>
+<textarea cols=100 rows=20 id="output"></textarea>
+<br>
+<button id="getCPUInfo" style="height:60px; width:100px">GetCpuInfo</button>
+<button id="getStorageInfo" style="height:60px; width:100px">GetStorageInfo</button>
+<br>
+<button id="getMemoryInfo" style="height:60px; width:100px">GetMemoryInfo</button>
+<button id="getDisplayInfo" style="height:60px; width:100px">GetDisplayInfo</button>
+</body>
+
+<script>
+
+var output = document.getElementById("output");
+
+function handle(button, callback) {
+  var b = document.getElementById(button);
+  b.addEventListener("click", callback);
+}
+
+function onErrorCallback(error) {
+  output.value += '\n An error occurred: ' + error.message + '\n';
+  output.scrollTop = output.scrollHeight;
+}
+
+handle("getCPUInfo", function() {
+  navigator.system.getCPUInfo().then(
+    function(cpu) {
+      output.value += '\n Device Capabilities CPU returned.';
+      output.value += '\n\t numOfProcessors : ' + cpu.numOfProcessors;
+      output.value += '\n\t archName : ' + cpu.archName;
+      output.value += '\n\t load : ' + cpu.load;
+      output.scrollTop = output.scrollHeight;
+    },
+    onErrorCallback);
+});
+
+handle("getStorageInfo", function() {
+  navigator.system.addEventListener(
+    "onattach",
+    function(storage) {
+      output.value += '\n A new storage attached';
+      output.value += '\n\t\t id: ' + storage.id;
+      output.value += '\n\t\t name: ' + storage.name;
+      output.value += '\n\t\t type: ' + storage.type;
+      output.value += '\n\t\t capacity: ' + storage.capacity + ' bytes';
+      output.scrollTop = output.scrollHeight;
+    });
+
+  navigator.system.addEventListener(
+    "ondetach",
+    function(storage) {
+      output.value += '\n A storage was removed';
+      output.value += '\n\t\t id: ' + storage.id;
+      output.value += '\n\t\t name: ' + storage.name;
+      output.value += '\n\t\t type: ' + storage.type;
+      output.value += '\n\t\t capacity: ' + storage.capacity + ' bytes';
+      output.scrollTop = output.scrollHeight;
+    });
+
+  navigator.system.getStorageInfo().then(
+    function(storage) {
+      output.value += '\n Device Capabilities STORAGE returned.';
+      output.value += '\n\t There are ' + storage.storages.length + ' storage units.\n';
+      for (var i = 0; i < storage.storages.length; i++) {
+        output.value += '\n\t storage[' + i + ']:';
+        output.value += '\n\t\t id: ' + storage.storages[i].id;
+        output.value += '\n\t\t name: ' + storage.storages[i].name;
+        output.value += '\n\t\t type: ' + storage.storages[i].type;
+        output.value += '\n\t\t capacity: ' + storage.storages[i].capacity + ' bytes';
+        output.scrollTop = output.scrollHeight;
+      }
+    },
+    onErrorCallback);
+});
+
+handle("getMemoryInfo", function() {
+  navigator.system.getMemoryInfo().then(
+    function(memeory) {
+      output.value += '\n Device Capabilities Memory returned.';
+      output.value += '\n\t capacity : ' + memeory.capacity;
+      output.value += '\n\t availableCapacity : ' + memeory.availableCapacity;
+      output.scrollTop = output.scrollHeight;
+    },
+    onErrorCallback);
+});
+
+handle("getDisplayInfo", function() {
+  navigator.system.addEventListener(
+    "onconnect",
+    function(display) {
+      output.value += '\n A new display connected';
+      output.value += '\n\t\t id: ' + display.id;
+      output.value += '\n\t\t name: ' + display.name;
+      output.value += '\n\t\t isPrimary: ' + display.isPrimary;
+      output.value += '\n\t\t isInternal: ' + display.isInternal;
+      output.value += '\n\t\t dpiX: ' + display.dpiX + ' px/inch';
+      output.value += '\n\t\t dpiY: ' + display.dpiY + ' px/inch';
+      output.value += '\n\t\t width: ' + display.width + ' px';
+      output.value += '\n\t\t height: ' + display.height + ' px';
+      output.value += '\n\t\t availWidth: ' + display.availWidth + ' px';
+      output.value += '\n\t\t availHeight: ' + display.availHeight + ' px';
+      output.scrollTop = output.scrollHeight;
+    });
+
+  navigator.system.addEventListener(
+    "ondisconnect",
+    function(display) {
+      output.value += '\n A display was disconnected';
+      output.value += '\n\t\t id: ' + display.id;
+      output.value += '\n\t\t name: ' + display.name;
+      output.value += '\n\t\t isPrimary: ' + display.isPrimary;
+      output.value += '\n\t\t isInternal: ' + display.isInternal;
+      output.value += '\n\t\t dpiX: ' + display.dpiX + ' px/inch';
+      output.value += '\n\t\t dpiY: ' + display.dpiY + ' px/inch';
+      output.value += '\n\t\t width: ' + display.width + ' px';
+      output.value += '\n\t\t height: ' + display.height + ' px';
+      output.value += '\n\t\t availWidth: ' + display.availWidth + ' px';
+      output.value += '\n\t\t availHeight: ' + display.availHeight + ' px';
+      output.scrollTop = output.scrollHeight;
+    });
+
+  navigator.system.getDisplayInfo().then(
+    function(display) {
+      output.value += '\n Device Capabilities DISPLAY returned.';
+      output.value += '\n\t There are ' + display.displays.length + ' display unit(s):';
+      for (var i = 0; i < display.displays.length; i++) {
+        output.value += '\n\t display[' + i + ']:';
+        output.value += '\n\t\t id: ' + display.displays[i].id;
+        output.value += '\n\t\t name: ' + display.displays[i].name;
+        output.value += '\n\t\t isPrimary: ' + display.displays[i].isPrimary;
+        output.value += '\n\t\t isInternal: ' + display.displays[i].isInternal;
+        output.value += '\n\t\t dpiX: ' + display.displays[i].dpiX + ' px/inch';
+        output.value += '\n\t\t dpiY: ' + display.displays[i].dpiY + ' px/inch';
+        output.value += '\n\t\t width: ' + display.displays[i].width + ' px';
+        output.value += '\n\t\t height: ' + display.displays[i].height + ' px';
+        output.value += '\n\t\t availWidth: ' + display.displays[i].availWidth + ' px';
+        output.value += '\n\t\t availHeight: ' + display.displays[i].availHeight + ' px';
+        output.scrollTop = output.scrollHeight;
+      }
+    },
+    onErrorCallback);
+});
+
+</script>

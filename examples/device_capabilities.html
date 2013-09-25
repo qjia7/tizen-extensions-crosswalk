@@ -1,0 +1,79 @@
+<h1>Hello Device Capabilities API!</h1>
+
+<body>
+<textarea cols=100 rows=20 id="output"></textarea>
+<br>
+<button id="getSyncCPUInfo" style="height:60px; width:100px">GetSyncCpuInfo</button>
+<button id="getCPUInfo" style="height:60px; width:100px">GetCpuInfo</button>
+<button id="getStorageInfo" style="height:60px; width:100px">Storage</button>
+</body>
+
+<script>
+
+var output = document.getElementById("output");
+
+function handle(button, callback) {
+  var b = document.getElementById(button);
+  b.addEventListener("click", callback);
+}
+
+function onErrorCallback(error) {
+  output.value += '\n An error occurred: ' + error.message + '\n';
+  output.scrollTop = output.scrollHeight;
+}
+
+handle("getSyncCPUInfo", function() {
+  try { 
+    var cap = navigator.system.getSyncCPUInfo();
+    output.value += '\n getCPUInfo() returned.';
+    var property = Object.getOwnPropertyNames(cap);
+    for (var i = 0; i < property.length; i++) {
+      output.value += '\n\t' + property[i] + ': ' + cap[property[i]];
+    }
+  }
+  catch (err) {
+    output.value += '\n getCapabilities() get exception:' + err.name;
+  }
+
+  output.scrollTop = output.scrollHeight;
+});
+
+handle("getCPUInfo", function() {
+
+    navigator.system.addEventListener(
+               "onattach",
+               function(storage) {
+                 output.value += '\n A new storage attached';
+                 output.value += '\n\t attri1 : ' + storage.attri1;
+                 output.value += '\n\t attri2 : ' + storage.attri2;
+                 output.scrollTop = output.scrollHeight;
+                 }
+    );
+
+    navigator.system.getCPUInfo(
+    function(cpu) {
+      output.value += '\n Device Capabilities CPU returned.';
+      output.value += '\n\t numOfProcessors : ' + cpu.numOfProcessors;
+      output.value += '\n\t archName : ' + cpu.archName;
+      output.scrollTop = output.scrollHeight;
+    });
+});
+
+handle("getStorageInfo", function() {
+    navigator.system.getStorageInfo(
+    function(storage) {
+      output.value += '\n Device Capabilities STORAGE returned.';
+      output.value += '\n\t There are ' + storage.storages.length + ' storage units.\n';
+      for (var i = 0; i < storage.storages.length; i++) {
+        output.value += '\n\t storage[' + i + ']:';
+        output.value += '\n\t\t id: ' + storage.storages[i].id;
+        output.value += '\n\t\t name: ' + storage.storages[i].name;
+        output.value += '\n\t\t type: ' + storage.storages[i].type;
+        output.value += '\n\t\t capability: ' + storage.storages[i].capability + ' bytes';
+        output.scrollTop = output.scrollHeight;
+      }
+    });
+});
+
+
+</script>

@@ -5,12 +5,16 @@
 #ifndef DEVICE_CAPABILITIES_DEVICE_CAPABILITIES_UTILS_H_
 #define DEVICE_CAPABILITIES_DEVICE_CAPABILITIES_UTILS_H_
 
+#include <string>
+
 #include "device_capabilities/device_capabilities_cpu.h"
 #include "device_capabilities/device_capabilities_storage.h"
 #include "common/picojson.h"
 
-DeviceCapabilitiesCpu device_cpu_(DeviceCapabilitiesCpu::GetDeviceCapabilitiesCpu());
-DeviceCapabilitiesStorage device_storage_(DeviceCapabilitiesStorage::GetDeviceCapabilitiesStorage());
+DeviceCapabilitiesCpu device_cpu_(
+    DeviceCapabilitiesCpu::GetDeviceCapabilitiesCpu());
+DeviceCapabilitiesStorage device_storage_(
+    DeviceCapabilitiesStorage::GetDeviceCapabilitiesStorage());
 
 picojson::value ParseJSONMessage(const char* message) {
   picojson::value result;

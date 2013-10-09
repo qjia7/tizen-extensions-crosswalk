@@ -40,7 +40,8 @@ void DeviceCapabilitiesInstance::HandleMessage(const char* message) {
   }
 }
 
-void DeviceCapabilitiesInstance::HandleGetDeviceInfo(std::string deviceName, const picojson::value& msg) {
+void DeviceCapabilitiesInstance::HandleGetDeviceInfo(std::string deviceName,
+    const picojson::value& msg) {
   std::string reply_id = msg.get("_reply_id").to_str();
   picojson::value output = picojson::value(picojson::object());
   picojson::object& o = output.get<picojson::object>();
@@ -56,20 +57,21 @@ void DeviceCapabilitiesInstance::HandleGetDeviceInfo(std::string deviceName, con
     // device_display_.Get(output);
   }
 
-  PostMessage(output.serialize().c_str());  
+  PostMessage(output.serialize().c_str());
 }
 
-void DeviceCapabilitiesInstance::HandleAddEventListener(const picojson::value& msg) {  
+void DeviceCapabilitiesInstance::HandleAddEventListener(
+    const picojson::value& msg) {
   std::string event_name = msg.get("eventName").to_str();
   if (event_name == "onattach" || event_name == "ondetach") {
     device_storage_.AddEventListener();
-  } else if(event_name == "onconnect" || event_name == "ondisconnect") {
-    //device_display_.AddEventListener();
+  } else if (event_name == "onconnect" || event_name == "ondisconnect") {
+    // device_display_.AddEventListener();
   }
 }
 
 void DeviceCapabilitiesInstance::HandleSyncGetCPUInfo() {
   picojson::value output = picojson::value(picojson::object());
   device_cpu_.Get(output);
-  SendSyncReply(output.serialize().c_str());  
+  SendSyncReply(output.serialize().c_str());
 }

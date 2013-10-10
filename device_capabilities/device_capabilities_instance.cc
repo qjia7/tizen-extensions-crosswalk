@@ -51,7 +51,7 @@ DeviceCapabilitiesInstance::HandleGetDeviceInfo(std::string deviceName,
   if (deviceName == "CPU") {
     device_cpu_.Get(output);
   } else if (deviceName == "Memory") {
-    // device_memory_.Get(output);
+    device_memory_.Get(output);
   } else if (deviceName == "Storage") {
     device_storage_.Get(output);
   } else if (deviceName == "Display") {

@@ -10,6 +10,8 @@
         [ 'extension_host_os == "mobile"', {
           'variables': {
             'packages': [
+              'capi-system-device',
+              'capi-system-info',
               'vconf',
             ]
           },
@@ -36,8 +38,10 @@
         'device_capabilities_extension.h',
         'device_capabilities_instance.cc',
         'device_capabilities_instance.h',
-        'device_capabilities_storage.h',
+        'device_capabilities_memory_mobile.cc',
+        'device_capabilities_memory.h',        
         'device_capabilities_storage_mobile.cc',
+        'device_capabilities_storage.h',        
         'device_capabilities_utils.h',
         '../common/extension.cc',
         '../common/extension.h',

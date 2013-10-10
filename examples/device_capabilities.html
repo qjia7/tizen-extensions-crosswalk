@@ -6,6 +6,7 @@
 <button id="getSyncCPUInfo" style="height:60px; width:100px">GetSyncCpuInfo</button>
 <button id="getCPUInfo" style="height:60px; width:100px">GetCpuInfo</button>
 <button id="getStorageInfo" style="height:60px; width:100px">Storage</button>
+<button id="getMemoryInfo" style="height:60px; width:100px">GetMemoryInfo</button>
 </body>
 
 <script>
@@ -72,6 +73,16 @@ handle("getStorageInfo", function() {
         output.value += '\n\t\t capability: ' + storage.storages[i].capability + ' bytes';
         output.scrollTop = output.scrollHeight;
       }
+    });
+});
+
+handle("getMemoryInfo", function() {
+    navigator.system.getMemoryInfo(
+    function(memeory) {
+      output.value += '\n Device Capabilities Memory returned.';
+      output.value += '\n\t capacity : ' + memeory.capacity;
+      output.value += '\n\t availableCapacity : ' + memeory.availableCapacity;
+      output.scrollTop = output.scrollHeight;
     });
 });
 

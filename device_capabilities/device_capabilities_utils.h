@@ -9,12 +9,15 @@
 
 #include "device_capabilities/device_capabilities_cpu.h"
 #include "device_capabilities/device_capabilities_storage.h"
+#include "device_capabilities/device_capabilities_memory.h"
 #include "common/picojson.h"
 
 DeviceCapabilitiesCpu device_cpu_
     (DeviceCapabilitiesCpu::GetDeviceCapabilitiesCpu());
 DeviceCapabilitiesStorage device_storage_
     (DeviceCapabilitiesStorage::GetDeviceCapabilitiesStorage());
+DeviceCapabilitiesMemory device_memory_
+    (DeviceCapabilitiesMemory::GetDeviceCapabilitiesMemory());
 
 picojson::value ParseJSONMessage(const char* message) {
   picojson::value result;

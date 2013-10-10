@@ -11,6 +11,8 @@
           'variables': {
             'packages': [
               'vconf',
+              'capi-system-info',
+              'capi-system-device',
             ]
           },
         }],

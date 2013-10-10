@@ -1,10 +1,14 @@
+// Copyright (c) 2013 Intel Corporation. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 #include "device_capabilities/device_capabilities_cpu.h"
 
-#include <string>
 #include <device.h>
 #include <system_info.h>
 
-void DeviceCapabilitiesCpu::Get(picojson::value& obj){
+#include <string>
+
+void DeviceCapabilitiesCpu::Get(picojson::value& obj) {
   if (QueryNumOfProcessors() &&
       QueryArchName() &&
       QueryLoad()) {
@@ -17,14 +21,14 @@ void DeviceCapabilitiesCpu::SetJsonValue(picojson::value& obj) {
   o["numOfProcessors"] = picojson::value(static_cast<double>(numOfProcessors_));
   o["archName"] = picojson::value(archName_);
   o["load"] = picojson::value(load_);
-}                    
+}
 
 bool DeviceCapabilitiesCpu::QueryNumOfProcessors() {
   int numofprocessors = 0;
 
   int ret = device_cpu_get_count(&numofprocessors);
   if (DEVICE_ERROR_NONE != ret) {
-	return false;
+    return false;
   }
 
   numOfProcessors_ = numofprocessors;
@@ -34,10 +38,11 @@ bool DeviceCapabilitiesCpu::QueryNumOfProcessors() {
 bool DeviceCapabilitiesCpu::QueryArchName() {
   char *archname = NULL;
 
-  int ret = system_info_get_value_string(SYSTEM_INFO_KEY_CORE_CPU_ARCH, &archname);
+  int ret = system_info_get_value_string
+      (SYSTEM_INFO_KEY_CORE_CPU_ARCH, &archname);
   if (SYSTEM_INFO_ERROR_NONE != ret) {
-	free(archname);
-	return false;
+    free(archname);
+    return false;
   }
 
   archName_ = archname;

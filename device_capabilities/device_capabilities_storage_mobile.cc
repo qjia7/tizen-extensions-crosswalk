@@ -1,3 +1,6 @@
+// Copyright (c) 2013 Intel Corporation. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 #include "device_capabilities/device_capabilities_storage.h"
 
 #include <sys/statfs.h>
@@ -8,9 +11,10 @@ void DeviceCapabilitiesStorage::Get(picojson::value& obj) {
   picojson::value storages = picojson::value(picojson::array(0));
   picojson::array& units_arr = storages.get<picojson::array>();
   units_arr.clear();
-  for (StoragesMap::iterator it = storages_.begin(); it != storages_.end(); it++) {
+  for (StoragesMap::iterator it = storages_.begin();
+      it != storages_.end(); it++) {
     picojson::value unit = picojson::value(picojson::object());
-    SetJsonValue(unit, it->second);    
+    SetJsonValue(unit, it->second);
     units_arr.push_back(unit);
   }
   picojson::object& o = obj.get<picojson::object>();
@@ -70,15 +74,16 @@ void DeviceCapabilitiesStorage::SetJsonValue(picojson::value& obj,
   o["id"] = picojson::value(unit.id);
   o["name"] = picojson::value(unit.name);
   o["type"] = picojson::value(unit.type);
-  o["capability"] = picojson::value(unit.capability); 
+  o["capability"] = picojson::value(unit.capability);
 }
 
 void DeviceCapabilitiesStorage::UpdateStorageUnits(std::string command) {
   picojson::value output = picojson::value(picojson::object());
-  
+
   picojson::value storages = picojson::value(picojson::array(0));
   picojson::array& units_arr = storages.get<picojson::array>();
-  for (StoragesMap::iterator it = storages_.begin(); it != storages_.end(); it++) {
+  for (StoragesMap::iterator it = storages_.begin();
+      it != storages_.end(); it++) {
     picojson::value unit = picojson::value(picojson::object());
     SetJsonValue(unit, it->second);
     units_arr.push_back(unit);
@@ -97,7 +102,8 @@ void DeviceCapabilitiesStorage::UpdateStorageUnits(std::string command) {
 //  }
 }
 
-void DeviceCapabilitiesStorage::OnStorageUnitAttach(keynode_t* node, void* user_data) {
+void DeviceCapabilitiesStorage::OnStorageUnitAttach(keynode_t* node,
+    void* user_data) {
 //  int wfd = vconf_keynode_get_int(node);
   DeviceCapabilitiesStorage* instance =
       static_cast<DeviceCapabilitiesStorage*>(user_data);
@@ -105,7 +111,8 @@ void DeviceCapabilitiesStorage::OnStorageUnitAttach(keynode_t* node, void* user_
   instance->UpdateStorageUnits("attachStorage");
 }
 
-void DeviceCapabilitiesStorage::OnStorageUnitDetach(keynode_t* node, void* user_data) {
+void DeviceCapabilitiesStorage::OnStorageUnitDetach(keynode_t* node,
+    void* user_data) {
 //  int wfd = vconf_keynode_get_int(node);
   DeviceCapabilitiesStorage* instance =
       static_cast<DeviceCapabilitiesStorage*>(user_data);

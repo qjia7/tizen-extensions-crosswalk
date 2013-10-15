@@ -25,14 +25,15 @@ function onErrorCallback(error) {
 }
 
 handle("getCPUInfo", function() {
-  navigator.system.getCPUInfo(
+  navigator.system.getCPUInfo().then(
     function(cpu) {
       output.value += '\n Device Capabilities CPU returned.';
       output.value += '\n\t numOfProcessors : ' + cpu.numOfProcessors;
       output.value += '\n\t archName : ' + cpu.archName;
       output.value += '\n\t load : ' + cpu.load;
       output.scrollTop = output.scrollHeight;
-    });
+    },
+    onErrorCallback);
 });
 
 handle("getStorageInfo", function() {
@@ -58,7 +59,7 @@ handle("getStorageInfo", function() {
       output.scrollTop = output.scrollHeight;
     });
 
-  navigator.system.getStorageInfo(
+  navigator.system.getStorageInfo().then(
     function(storage) {
       output.value += '\n Device Capabilities STORAGE returned.';
       output.value += '\n\t There are ' + storage.storages.length + ' storage units.\n';
@@ -70,17 +71,19 @@ handle("getStorageInfo", function() {
         output.value += '\n\t\t capacity: ' + storage.storages[i].capacity + ' bytes';
         output.scrollTop = output.scrollHeight;
       }
-    });
+    },
+    onErrorCallback);
 });
 
 handle("getMemoryInfo", function() {
-  navigator.system.getMemoryInfo(
+  navigator.system.getMemoryInfo().then(
     function(memeory) {
       output.value += '\n Device Capabilities Memory returned.';
       output.value += '\n\t capacity : ' + memeory.capacity;
       output.value += '\n\t availableCapacity : ' + memeory.availableCapacity;
       output.scrollTop = output.scrollHeight;
-    });
+    },
+    onErrorCallback);
 });
 
 </script>

@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "device_capabilities/device_capabilities_cpu.h"
+#include "device_capabilities/device_capabilities_display.h"
 #include "device_capabilities/device_capabilities_memory.h"
 #include "device_capabilities/device_capabilities_storage.h"
 #include "device_capabilities/device_capabilities_utils.h"
@@ -26,6 +27,9 @@ void DeviceCapabilitiesInstance::DeviceInstanceMapInitialize() {
   device_instatances_map_.insert(
       std::pair<std::string, DeviceCapabilitiesObject&>(
       "CPU", DeviceCapabilitiesCpu::GetDeviceCapabilitiesCpu()));
+  device_instatances_map_.insert(
+      std::pair<std::string, DeviceCapabilitiesObject&>(
+      "Display", DeviceCapabilitiesDisplay::GetDeviceCapabilitiesDisplay()));
   device_instatances_map_.insert(
       std::pair<std::string, DeviceCapabilitiesObject&>(
       "Memory", DeviceCapabilitiesMemory::GetDeviceCapabilitiesMemory()));

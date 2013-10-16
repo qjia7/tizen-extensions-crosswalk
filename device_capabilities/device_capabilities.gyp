@@ -35,6 +35,8 @@
         'device_capabilities_cpu_desktop.cc',
         'device_capabilities_cpu_mobile.cc',
         'device_capabilities_cpu.h',
+        'device_capabilities_display_x11.cc',
+        'device_capabilities_display.h',
         'device_capabilities_extension.cc',
         'device_capabilities_extension.h',
         'device_capabilities_instance.cc',

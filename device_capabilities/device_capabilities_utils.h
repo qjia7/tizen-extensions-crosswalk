@@ -15,6 +15,8 @@
 typedef std::list<DeviceCapabilitiesInstance*> DeviceCapabilitiesEventsList;
 static DeviceCapabilitiesEventsList device_storage_attach_events_;
 static DeviceCapabilitiesEventsList device_storage_detach_events_;
+static DeviceCapabilitiesEventsList device_display_connect_events_;
+static DeviceCapabilitiesEventsList device_display_disconnect_events_;
 
 class DeviceCapabilitiesObject {
  public:
